@@ -1,0 +1,6 @@
+class Collector:
+    
+    def collect():
+        ...
+
+
