@@ -3,7 +3,7 @@ import board
 import time
 from prometheus_client import start_http_server, Gauge, Summary
 
-collection_interval = 1
+collection_interval = 5
 
 temperature = Gauge("temperature_data", "temperature data gathered by DHT22")
 humidity = Gauge("humdity_data", "humidity data gathered by DHT22")
@@ -21,10 +21,13 @@ def get_temp_data():
             temp_F = thermometer.temperature * (9/5) + 32
             temp_F = str(truncate(temp_F, 2))
 
-            humidity = thermometer.humidity
-            humidity = str(truncate(humidity, 2))
-
-            print("Temperature: {:10s}  Humidity: {:10s}".format(temp_F, humidity))
+            hmty = thermometer.humidity
+            hmty = str(truncate(hmty, 2))
+    
+            # print("Temperature: {:10s}  Humidity: {:10s}".format(temp_F, humidity))
+        
+            temperature.set(temp_F)
+            humidity.set(hmty)
 
         except RuntimeError:
             pass
