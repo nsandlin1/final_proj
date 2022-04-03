@@ -1,2 +1,4 @@
+Adafruit-DHT==1.4.0
+board==1.0
 prometheus-client==0.13.1
 RPi.GPIO==0.7.1
