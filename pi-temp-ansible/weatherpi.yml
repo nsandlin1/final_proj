@@ -1,0 +1,23 @@
+#- name: grafana
+#  hosts: weather_pi
+#  become: yes
+#  roles: 
+#    - grafana
+#  tags: 
+#    - grafana
+
+- name: prometheus
+  hosts: weather_pi
+  become: yes
+  roles:
+    - prometheus
+  tags:
+    - prometheus
+
+- name: gettemp
+  hosts: weather_pi
+  become: yes
+  roles:
+    - gettemp
+  tags:
+    - gettemp

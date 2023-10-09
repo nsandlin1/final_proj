@@ -1,0 +1,13 @@
+[Unit]
+Description=Temperature Service
+After=network.target
+
+
+[Service]
+User={{ ansible_user }}
+Type=simple
+ExecStart=/usr/bin/python3 /opt/gettemp.py
+
+
+[Install]
+WantedBy=multi-user.target

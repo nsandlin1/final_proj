@@ -1,0 +1,6 @@
+[weather_pi]
+daddycristoff ansible_user=pi
+
+[weather_pi:vars]
+ansible_python_interpreter=/usr/bin/python3
+

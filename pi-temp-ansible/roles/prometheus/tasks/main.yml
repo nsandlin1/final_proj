@@ -1,0 +1,38 @@
+---
+- name: extract_prometheus_tarball
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-armv7.tar.gz
+    remote_src: yes
+    dest: "/home/{{ ansible_user }}"
+
+- name: move_executables
+  command: mv /home/{{ ansible_user }}/prometheus-2.22.0.linux-armv7/prometheus /usr/local/bin/prometheus
+
+- name: move_executables2
+  command: mv /home/{{ ansible_user }}/prometheus-2.22.0.linux-armv7/promtool /usr/local/bin/promtool
+
+- name: create_etc_dir
+  file:
+    path: /etc/prometheus
+    state: directory
+
+- name: copy_config
+  copy:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: copy_service
+  template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: restart_service
+  service:
+    name: prometheus.service
+    state: restarted
